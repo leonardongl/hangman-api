@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping(value = "/words")
 @CrossOrigin(origins = "*")
@@ -17,7 +19,7 @@ public class WordController {
 
     @GetMapping("/get-word")
     @ResponseBody
-    public ResponseEntity<Word> getWord() {
+    public ResponseEntity<Word> getWord() throws IOException {
         return ResponseEntity.ok().body(wordService.findRandom());
     }
 
