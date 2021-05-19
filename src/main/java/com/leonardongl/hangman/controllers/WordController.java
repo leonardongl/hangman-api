@@ -25,7 +25,7 @@ public class WordController {
 
     @GetMapping("/find-letter/{index}/{letter}")
     @ResponseBody
-    public ResponseEntity<LettersIndexDto> findLetter(@PathVariable int index, @PathVariable char letter) {
+    public ResponseEntity<LettersIndexDto> findLetter(@PathVariable int index, @PathVariable char letter) throws IOException {
         return ResponseEntity.ok().body(wordService.findLetter(index, letter));
     }
 

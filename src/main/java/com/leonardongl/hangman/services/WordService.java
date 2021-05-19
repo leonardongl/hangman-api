@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class WordService {
@@ -14,22 +16,33 @@ public class WordService {
     @Autowired
     FileXmlService fileXmlService;
 
-    public Word findByIndex(int index) {
-        Word word = new Word(0, "ABACATE");
-        return word;
+    public Word findByIndex(int index) throws IOException {
+        WordXmlDto wordXmlDto = fileXmlService.getData("c:\\words.xml");
+        return new Word(index, wordXmlDto.getWord_list().get(index));
     }
 
     public Word findRandom() throws IOException {
         WordXmlDto wordXmlDto = fileXmlService.getData("c:\\words.xml");
         int count = wordXmlDto.getWord_list().size();
         int index = (int) (Math.random() * count);
-        Word word = new Word(index, wordXmlDto.getWord_list().get(index));
-        return word;
+        return new Word(index, wordXmlDto.getWord_list().get(index));
     }
 
-    public LettersIndexDto findLetter(int index, char letter) {
+    public LettersIndexDto findLetter(int index, char letter) throws IOException {
         Word word = this.findByIndex(index);
         LettersIndexDto lettersIndexDto = new LettersIndexDto();
+
+        String text = word.getText();
+        char[] chars = text.toCharArray();
+
+        int i = 0;
+        for (char letterX: chars) {
+            if (letterX == letter) {
+                lettersIndexDto.getIndexes().add(i);
+            }
+            i++;
+        }
+
         return lettersIndexDto;
     }
 
