@@ -1,14 +1,13 @@
 package com.leonardongl.hangman.services;
 
 import com.leonardongl.hangman.dtos.LettersIndexDto;
+import com.leonardongl.hangman.dtos.WordPlayDto;
 import com.leonardongl.hangman.dtos.WordXmlDto;
 import com.leonardongl.hangman.models.Word;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class WordService {
@@ -21,11 +20,11 @@ public class WordService {
         return new Word(index, wordXmlDto.getWord_list().get(index));
     }
 
-    public Word findRandom() throws IOException {
+    public WordPlayDto findRandom() throws IOException {
         WordXmlDto wordXmlDto = fileXmlService.getData("c:\\words.xml");
         int count = wordXmlDto.getWord_list().size();
         int index = (int) (Math.random() * count);
-        return new Word(index, wordXmlDto.getWord_list().get(index));
+        return new WordPlayDto(index, wordXmlDto.getWord_list().get(index).length());
     }
 
     public LettersIndexDto findLetter(int index, char letter) throws IOException {
