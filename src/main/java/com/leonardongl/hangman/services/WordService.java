@@ -8,8 +8,6 @@ import com.leonardongl.hangman.services.exceptions.IndexOutOfBoundsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 @Service
 public class WordService {
 
@@ -18,20 +16,20 @@ public class WordService {
 
     public Word findByIndex(int index) {
         try {
-            return new Word(index, fileXmlService.getData("c:\\words.xml").getWord_list().get(index));
+            return new Word(index, fileXmlService.getData().getWord_list().get(index));
         } catch (Exception exception) {
             throw new IndexOutOfBoundsException("Error searching word by index: " + index);
         }
     }
 
-    public WordPlayDto findRandom() throws IOException {
-        WordXmlDto wordXmlDto = fileXmlService.getData("c:\\words.xml");
+    public WordPlayDto findRandom() {
+        WordXmlDto wordXmlDto = fileXmlService.getData();
         int count = wordXmlDto.getWord_list().size();
         int index = (int) (Math.random() * count);
         return new WordPlayDto(index, wordXmlDto.getWord_list().get(index).length());
     }
 
-    public LettersIndexDto findLetter(int index, char letter) throws IOException {
+    public LettersIndexDto findLetter(int index, char letter) {
         Word word = this.findByIndex(index);
         LettersIndexDto lettersIndexDto = new LettersIndexDto();
 
