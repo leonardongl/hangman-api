@@ -4,6 +4,7 @@ import com.leonardongl.hangman.dtos.LettersIndexDto;
 import com.leonardongl.hangman.dtos.WordPlayDto;
 import com.leonardongl.hangman.dtos.WordXmlDto;
 import com.leonardongl.hangman.models.Word;
+import com.leonardongl.hangman.services.exceptions.IndexOutOfBoundsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,12 @@ public class WordService {
     @Autowired
     FileXmlService fileXmlService;
 
-    public Word findByIndex(int index) throws IOException {
-        WordXmlDto wordXmlDto = fileXmlService.getData("c:\\words.xml");
-        return new Word(index, wordXmlDto.getWord_list().get(index));
+    public Word findByIndex(int index) {
+        try {
+            return new Word(index, fileXmlService.getData("c:\\words.xml").getWord_list().get(index));
+        } catch (Exception exception) {
+            throw new IndexOutOfBoundsException("Error searching word by index: " + index);
+        }
     }
 
     public WordPlayDto findRandom() throws IOException {
