@@ -4,9 +4,11 @@ import com.leonardongl.hangman.dtos.LettersIndexDto;
 import com.leonardongl.hangman.dtos.WordPlayDto;
 import com.leonardongl.hangman.dtos.WordXmlDto;
 import com.leonardongl.hangman.models.Word;
+import com.leonardongl.hangman.services.exceptions.IncorrectWordTextException;
 import com.leonardongl.hangman.services.exceptions.IndexOutOfBoundsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class WordService {
@@ -22,7 +24,15 @@ public class WordService {
         }
     }
 
-    public WordPlayDto findRandom() {
+    public Word guessWord(int index, String text) {
+        Word word = this.findByIndex(index);
+        if (text.equals(word.getText())) {
+            return word;
+        }
+        throw new IncorrectWordTextException("Index and text do not match the correct word");
+    }
+
+    public WordPlayDto getWord() {
         WordXmlDto wordXmlDto = fileXmlService.getData();
         int count = wordXmlDto.getWord_list().size();
         int index = (int) (Math.random() * count);

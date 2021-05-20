@@ -2,8 +2,8 @@ package com.leonardongl.hangman.controllers;
 
 import com.leonardongl.hangman.dtos.LettersIndexDto;
 import com.leonardongl.hangman.dtos.WordPlayDto;
+import com.leonardongl.hangman.models.Word;
 import com.leonardongl.hangman.services.WordService;
-import com.leonardongl.hangman.services.exceptions.IndexOutOfBoundsException;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class WordControllerTest {
 
     @Test
     public void mustReturnSuccess_WhenSeachRandomWord() {
-        Mockito.when(this.wordService.findRandom())
+        Mockito.when(this.wordService.getWord())
             .thenReturn(new WordPlayDto(0, 4));
 
         RestAssuredMockMvc.given()
@@ -47,18 +47,31 @@ public class WordControllerTest {
     }
 
     @Test
+    public void mustReturnSuccess_WhenSeachAGuessWord() {
+        Mockito.when(this.wordService.guessWord(0, "DELL"))
+            .thenReturn(new Word(0, "DELL"));
+
+        RestAssuredMockMvc.given()
+            .accept(ContentType.JSON)
+        .when()
+            .get("words/guess-word/{index}/{text}", 0, "DELL")
+        .then()
+            .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
     public void mustReturnSuccess_WhenSearchForLetterInWord() {
         List<Integer> indexes = new ArrayList<>(Arrays.asList(2, 3));
 
         Mockito.when(this.wordService.findLetter(0, 'L'))
-                .thenReturn(new LettersIndexDto(indexes));
+            .thenReturn(new LettersIndexDto(indexes));
 
         RestAssuredMockMvc.given()
-                .accept(ContentType.JSON)
-            .when()
-                .get("words/find-letter/{index}/{letter}", 0, 'L')
-            .then()
-                .statusCode(HttpStatus.OK.value());
+            .accept(ContentType.JSON)
+        .when()
+            .get("words/find-letter/{index}/{letter}", 0, 'L')
+        .then()
+            .statusCode(HttpStatus.OK.value());
     }
 
 }

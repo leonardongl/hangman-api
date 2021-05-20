@@ -1,5 +1,6 @@
 package com.leonardongl.hangman.handler;
 
+import com.leonardongl.hangman.services.exceptions.IncorrectWordTextException;
 import com.leonardongl.hangman.services.exceptions.IndexOutOfBoundsException;
 import com.leonardongl.hangman.services.exceptions.XmlImportException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,12 @@ public class ControllerHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<StandardError> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception, HttpServletRequest request) {
         StandardError standardError = new StandardError(HttpStatus.BAD_REQUEST.value(), "Invalid Argument");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
+    }
+
+    @ExceptionHandler(IncorrectWordTextException.class)
+    public ResponseEntity<StandardError> incorrectWordTextException(IncorrectWordTextException exception, HttpServletRequest request) {
+        StandardError standardError = new StandardError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
     }
 

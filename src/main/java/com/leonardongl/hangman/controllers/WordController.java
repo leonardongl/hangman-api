@@ -2,6 +2,7 @@ package com.leonardongl.hangman.controllers;
 
 import com.leonardongl.hangman.dtos.LettersIndexDto;
 import com.leonardongl.hangman.dtos.WordPlayDto;
+import com.leonardongl.hangman.models.Word;
 import com.leonardongl.hangman.services.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,13 @@ public class WordController {
     @GetMapping("/get-word")
     @ResponseBody
     public ResponseEntity<WordPlayDto> getWord() {
-        return ResponseEntity.ok().body(wordService.findRandom());
+        return ResponseEntity.ok().body(wordService.getWord());
+    }
+
+    @GetMapping("/guess-word/{index}/{text}")
+    @ResponseBody
+    public ResponseEntity<Word> guessWord(@PathVariable int index, @PathVariable String text) {
+        return ResponseEntity.ok().body(wordService.guessWord(index, text));
     }
 
     @GetMapping("/find-letter/{index}/{letter}")
