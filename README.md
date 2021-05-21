@@ -19,7 +19,7 @@ $ git clone https://github.com/leonardongl/hangman-api.git
 - After cloning the project, open it in the IDE of your choice
 - Build the project as a Maven application
 - Run the application
-- If you have any questions, watch this [video](https://www.youtube.com/watch?v=iWfIR2nc69A&ab_channel=TotalCross).
+- If you have any questions, watch this [video](https://www.youtube.com/watch?v=iWfIR2nc69A&ab_channel=TotalCross)
 
 ## How to play
 - To play, you need to build the frontend of this application that is mentioned above or access the following website [Hangman](http://hangman.noronhaleao.com.br/)
