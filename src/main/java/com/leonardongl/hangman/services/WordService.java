@@ -8,7 +8,6 @@ import com.leonardongl.hangman.services.exceptions.IncorrectWordTextException;
 import com.leonardongl.hangman.services.exceptions.IndexOutOfBoundsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class WordService {
