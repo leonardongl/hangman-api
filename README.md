@@ -42,6 +42,10 @@ $ git clone https://github.com/leonardongl/hangman-api.git
 - Unit tests were implemented using JUnit 5 for each endpoint
 - You can find it in [WordControllerTests](https://github.com/leonardongl/hangman-api/blob/master/src/test/java/com/leonardongl/hangman/controllers/WordControllerTest.java)
 
+## Deploy
+- The API was deployed in [Heroku](https://www.heroku.com/) and can be consumed following the endpoints above with the following BASEURL: https://damp-depths-34440.herokuapp.com/
+- You can use a API client tool to consumes, like [Postman](https://www.postman.com/)
+
 ## Author
 👤 **Leonardo Augusto Noronha Leão**
 
